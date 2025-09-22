@@ -32,10 +32,9 @@ export const fetchAllMovies = createAsyncThunk(
   "GET/ALL_MOVIES",
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=04c35731a5ee918f014970082a0088b1&page=1`
-      );
-      return res?.data?.results;
+      const res = await axios.get(`https://api.imdbapi.dev/titles`);
+      console.log(res);
+      return res?.data?.titles;
     } catch (error) {
       const meaasge = error.response.data.meaasge || "";
       return thunkAPI.rejectWithValue(meaasge);
@@ -43,19 +42,18 @@ export const fetchAllMovies = createAsyncThunk(
   }
 );
 
-// moviesSlice.js
 export const searchMovies = createAsyncThunk(
-  "SEARCH/Movies",
-  async (searchTerm = "Avengers", thunkAPI) => {
+  "GET/ALL_MOVIES",
+  async ({ searchText }, thunkAPI) => {
     try {
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/upcoming?s=${searchTerm}&apikey=04c35731a5ee918f014970082a0088b1`
+        `https://api.imdbapi.dev/search/titles?query=${searchText}`
       );
-      return res.data.Search || [];
+      console.log(res);
+      return res?.data?.titles;
     } catch (error) {
-      const message =
-        error.response?.data?.Error || error.message || "Something went wrong";
-      return thunkAPI.rejectWithValue(message);
+      const meaasge = error.response.data.meaasge || "";
+      return thunkAPI.rejectWithValue(meaasge);
     }
   }
 );

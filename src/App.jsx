@@ -1,12 +1,23 @@
 import { IoSearch } from "react-icons/io5";
 import { BiSolidCameraMovie } from "react-icons/bi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllMovies } from "./features/movie/moviesSlice";
+import { fetchAllMovies, searchMovies } from "./features/movie/moviesSlice";
 
 const App = () => {
   const { movies, isLoading, isError } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
+
+  const [searchText, setSearchText] = useState("");
+
+  const search = () => {
+    dispatch(searchMovies({ searchText }));
+  };
+
+  const cancelSearch = () => {
+    setSearchText("");
+    dispatch(fetchAllMovies());
+  };
 
   useEffect(() => {
     dispatch(fetchAllMovies());
@@ -60,7 +71,7 @@ const App = () => {
         </div>
       </div>
       <div className="bg-[#0C1113] w-3/4 p-4 text-white h-screen overflow-y-scroll overflow-x-hidden ">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row gap-2">
           <div
             className="bg-[#1C1F21] w-[80%] p-1 px-4 rounded-md outline-none 
           border border-transparent hover:border-gray-400 focus:border-gray-500
@@ -68,31 +79,57 @@ const App = () => {
           >
             <IoSearch />
             <input
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
               className="px-2 outline-none w-full"
               placeholder="Search movies..."
             />
           </div>
+          <button
+            onClick={search}
+            className="cursor-pointer px-2 py-0.5 bg-[#1c1f21] border border-gray-500 rounded-md"
+          >
+            Search
+          </button>
+          <button
+            onClick={cancelSearch}
+            className="cursor-pointer px-2 py-0.5 bg-[#1c1f21] border border-gray-500 rounded-md"
+          >
+            Cancel
+          </button>
         </div>
         <div className="">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
-            {movies.map((movie) => {
+            {movies?.map((movie) => {
               return (
                 <div key={movie.id}>
                   <div className="relative sm:w-55 md:w-45 xl:w-55">
                     <img
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      src={movie.primaryImage?.url}
                       alt="Description"
-                      className="w-full"
+                      className="w-full h-[300px]"
                     />
                     <span className="absolute bottom-2 right-4 bg-yellow-300 text-black font-bold text-sm px-2 rounded">
-                      {movie.vote_average.toFixed(1)}
+                      {movie?.rating?.aggregateRating}
                     </span>
                   </div>
-                  <div className="p-3">
-                    <h2 className="text-lg font-semibold">{movie.title}</h2>
-                    <p className="text-sm text-gray-300">
-                      {movie.release_date}
-                    </p>
+                  <div className="p-2 flex flex-col items-center justify-between">
+                    <h2 className="font-semibold text-sm">
+                      {movie.originalTitle}
+                    </h2>
+                    <p className="text-sm text-gray-300">{movie.startYear}</p>
+                    <div className="flex flex-row gap-2">
+                      {movie.genres?.map((g, i) => {
+                        if (i > 1) {
+                          return;
+                        }
+                        return (
+                          <div className="bg-[#ffffff20] border border-[#ffffff50] py-0.5 px-1 rounded-md">
+                            <p className="text-sm ">{g}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               );
