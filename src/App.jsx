@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     dispatch(fetchAllMovies());
   }, [dispatch]);
-  console.log(movies);
+
 
   if (isLoading) return <p className="text-white font-bold">Loading...</p>;
   if (isError) return <p className="text-red-500">{isError}</p>;
@@ -119,13 +119,13 @@ const App = () => {
                     </h2>
                     <p className="text-sm text-gray-300">{movie.startYear}</p>
                     <div className="flex flex-row gap-2">
-                      {movie.genres?.map((g, i) => {
+                      {movie.genres?.map((genre, i) => {
                         if (i > 1) {
                           return;
                         }
                         return (
                           <div className="bg-[#ffffff20] border border-[#ffffff50] py-0.5 px-1 rounded-md">
-                            <p className="text-sm ">{g}</p>
+                            <p className="text-sm ">{genre}</p>
                           </div>
                         );
                       })}
