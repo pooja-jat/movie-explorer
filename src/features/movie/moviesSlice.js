@@ -9,8 +9,13 @@ const moviesSlice = createSlice({
     isSuccess: false,
     isErrror: false,
     meaasge: null,
+    searchText: "",
   },
-  reducers: {},
+  reducers: {
+    setSearchText: (state, action) => {
+      state.searchText = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllMovies.pending, (state) => {
@@ -68,5 +73,7 @@ export const searchMovies = createAsyncThunk(
     }
   }
 );
+
+export const { setSearchText } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
-import { fetchAllMovies } from "../features/movie/moviesSlice";
+import { fetchAllMovies, setSearchText } from "../features/movie/moviesSlice";
 
 const GenreSelection = () => {
   const dispatch = useDispatch();
 
   // on genre change
   const handleGenreSelection = (genre) => {
+    dispatch(setSearchText(""));
     dispatch(fetchAllMovies({ genre: genre }));
   };
 

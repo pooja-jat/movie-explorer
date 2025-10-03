@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { fetchAllMovies, searchMovies } from "../features/movie/moviesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllMovies,
+  searchMovies,
+  setSearchText,
+} from "../features/movie/moviesSlice";
 import { IoSearch } from "react-icons/io5";
 
 const Search = () => {
-  const [searchText, setSearchText] = useState("");
+  const { searchText } = useSelector((state) => state.movies);
 
   const dispatch = useDispatch();
 
@@ -13,7 +16,7 @@ const Search = () => {
   };
 
   const cancelSearch = async () => {
-    setSearchText("");
+    dispatch(setSearchText(""));
     dispatch(fetchAllMovies({ genre: "", year: 2025 }));
   };
 
@@ -35,7 +38,7 @@ const Search = () => {
               search();
             }
           }}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => dispatch(setSearchText(e.target.value))}
           className="px-2 outline-none w-full"
           placeholder="Search movies..."
         />
