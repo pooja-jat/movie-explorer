@@ -30,12 +30,16 @@ const moviesSlice = createSlice({
 
 export const fetchAllMovies = createAsyncThunk(
   "GET/ALL_MOVIES",
-  async ({ genres }, thunkAPI) => {
+  async ({ genre, year }, thunkAPI) => {
     try {
       const objParam = {};
 
-      if (genres.length > 0) {
-        objParam.genres = genres.join(",");
+      if (genre) {
+        objParam.genres = genre;
+      }
+
+      if (year) {
+        objParam.startYear = year;
       }
 
       const res = await axios.get(`https://api.imdbapi.dev/titles`, {
