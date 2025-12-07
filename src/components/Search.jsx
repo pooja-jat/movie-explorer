@@ -5,6 +5,7 @@ import {
   setSearchText,
 } from "../features/movie/moviesSlice";
 import { IoSearch } from "react-icons/io5";
+import { useState } from "react";
 
 const Search = () => {
   const { searchText } = useSelector((state) => state.movies);
@@ -15,11 +16,19 @@ const Search = () => {
     dispatch(searchMovies({ searchText }));
   };
 
-  const cancelSearch = async () => {
+  const cancelSearch = () => {
     dispatch(setSearchText(""));
     dispatch(fetchAllMovies({ genre: "", year: 2025 }));
   };
 
+  const [name, setName] = useState(1);
+
+  const fn = () => {
+    setName(2);
+    setName(name + 1);
+  };
+
+  console.log(name);
   return (
     <div className="flex flex-row gap-2">
       <div
@@ -44,7 +53,7 @@ const Search = () => {
         />
       </div>
       <button
-        onClick={search}
+        onClick={fn}
         className="cursor-pointer px-2 py-0.5 bg-[#1c1f21] border border-gray-500 rounded-md"
       >
         Search

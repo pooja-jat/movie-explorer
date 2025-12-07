@@ -11,17 +11,22 @@ const GenreSelection = () => {
   };
 
   return (
-    <div className="flex w-full px-2 cursor-pointer  text-gray-300 bg-[#1C1F21] overflow-hidden rounded-lg">
-      <select
-        onChange={(e) => handleGenreSelection(e.target.value)}
-        className="cursor-pointer w-full text-white p-2  outline-none bg-[#1C1F21] "
-      >
-        <option value="Action">Action</option>
-        <option value="Comedy">Comedy</option>
-        <option value="Drama">Drama</option>
-        <option value="Horror">Horror</option>
-        <option value="Thriller">Thriller</option>
-      </select>
+    <div>
+      <div className="text-sm font-semibold text-gray-400 mb-2">
+        Select Genre
+      </div>
+      <div className="flex w-full px-2 cursor-pointer  text-gray-300 bg-[#1C1F21] overflow-hidden rounded-lg">
+        <select
+          onChange={(e) => handleGenreSelection(e.target.value)}
+          className="cursor-pointer w-full text-white p-2  outline-none bg-[#1C1F21] "
+        >
+          <option value="Action">Action</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Drama">Drama</option>
+          <option value="Horror">Horror</option>
+          <option value="Thriller">Thriller</option>
+        </select>
+      </div>
     </div>
   );
 };

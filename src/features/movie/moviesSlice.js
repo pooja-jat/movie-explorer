@@ -65,7 +65,7 @@ export const searchMovies = createAsyncThunk(
       const res = await axios.get(
         `https://api.imdbapi.dev/search/titles?query=${searchText}`
       );
-      console.log(res);
+    
       return res?.data?.titles;
     } catch (error) {
       const meaasge = error.response.data.meaasge || "";

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import Search from "./Search";
+import { Link } from "react-router-dom";
 
 const MovieList = () => {
   const { movies: _movies, isLoading } = useSelector((state) => state.movies);
@@ -16,7 +17,11 @@ const MovieList = () => {
             movies
               .filter((movie) => movie?.primaryImage?.url)
               .map((movie) => {
-                return <MovieCard key={movie.id} movie={movie} />;
+                return (
+                  <Link key={movie.id} to={`/movie/${movie.id}`}>
+                    <MovieCard movie={movie} />
+                  </Link>
+                );
               })
           )}
         </div>
@@ -27,12 +32,12 @@ const MovieList = () => {
 
 const MovieCard = ({ movie }) => {
   return (
-    <div className="" key={movie.id}>
+    <div className="">
       <div className="  flex items-center justify-center">
         <div className="relative sm:w-55 md:w-45 xl:w-55">
           <img
             src={movie.primaryImage?.url}
-            alt="Description"
+            alt={movie.originalTitle}
             className="w-full h-[220px] md:h-[250px] lg:h-[250px] xl:h-[280px]"
           />
 
